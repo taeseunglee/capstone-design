@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 // json to csv config
-const fields = ['seq', 'device', 'unit', 'type', 'value', 'ip', 'time'];
+const fields = ['id', 'seq', 'device', 'unit', 'type', 'value', 'ip', 'time'];
 const opts = { fields };
 const json2csv = require('json2csv').parse;
 const mysql= require('mysql');
@@ -47,6 +47,7 @@ app.get('/download', function(req, res) {
                 console.log(rows);
                 for (var i = 0; i < rows.length; ++i) {
                     objs.push({
+                        id : rows[i].id,
                         seq : rows[i].seq,
                         device : rows[i].device,
                         unit : rows[i].unit,
@@ -57,7 +58,7 @@ app.get('/download', function(req, res) {
                     });
                 }
                 const csv = json2csv(objs, opts);
-                console.log(csv);
+
                 res.setHeader('Content-disposition', 'attachment; filename=data.csv');
                 res.set('Content-Type', 'text/csv');
                 res.status(200).send(csv);
