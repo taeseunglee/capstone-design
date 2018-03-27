@@ -11,7 +11,7 @@ Number.prototype.pad = function(size) {
 };
 
 var seq = 0;
-app.get('/log', function(req, res) {
+app.get('/update', function(req, res) {
     console.log("%j", req.query);
     var date = new Date();
 
